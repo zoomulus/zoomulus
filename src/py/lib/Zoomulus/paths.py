@@ -19,6 +19,7 @@ class InvalidPathException(Exception):
 		Exception.__init__(self,path + " doesn't seem to be a valid path")
 
 
+
 class FileResource:
 	def GetFile(uri):
 		fragments = urlparse.urlsplit(uri)
@@ -40,6 +41,14 @@ class FileResource:
 		
 	def __init__(self,path):
 		self.path = path
+	def __str__(self):
+		return self.path
+	def __eq__(self,rhs):
+		return str(self)==str(rhs)
+	def IsLocalFile(self):
+		return self.__class__.__name__ == 'LocalFile'
+	def IsLocalDir(self):
+		return self.__class__.__name__ == 'LocalDir'
 		
 class FileResourceTests(unittest.TestCase):
 	def setUp(self):
@@ -48,8 +57,12 @@ class FileResourceTests(unittest.TestCase):
 
 class LocalFile(FileResource):
 	def __init__(self,path):
-		dname, self.filename = path.split(path)
+		if os.path.exists(path) and not os.path.isfile(path):
+			raise InvalidPathException, path
+		dname, self.filename = os.path.split(path)
 		FileResource.__init__(self,dname)
+	def __str__(self):
+		return self.path+'/'+self.filename
 		
 class LocalFileTests(unittest.TestCase):
 	def setUp(self):
@@ -64,6 +77,8 @@ class LocalFileTests(unittest.TestCase):
 
 class LocalDir(FileResource):
 	def __init__(self,path):
+		if os.path.exists(path) and not os.path.isdir(path):
+			raise InvalidPathException, path
 		FileResource.__init__(self,path)
 		
 class LocalFolderTests(unittest.TestCase):
@@ -76,6 +91,14 @@ class LocalFolderTests(unittest.TestCase):
 		self.assertEqual(ld.__class__.__name__,'LocalDir')
 		
 
+def IsCloudPath(uri):
+	return GetCloudPath(uri) is not None
+
+def GetCloudPath(uri):
+	cType = urlparse.urlsplit(uri)[0]
+	if cType == 'aws':
+		return AWSPath(uri)
+	return None
 
 class CloudPath(FileResource):
 	def __init__(self,cloudtype,path):
@@ -89,7 +112,7 @@ class CloudPathTests(unittest.TestCase):
 
 class AWSPath(CloudPath):
 	def __init__(self,path):
-		CloudPath.__init__(self,'aws',path)
+		CloudPath.__init__(self,'aws',urlparse.urlsplit(path)[2])
 		self.path = self.path.lstrip('/')
 		if len(self.path) > 0:
 			try:
@@ -126,6 +149,10 @@ class AWSPathTests(unittest.TestCase):
 			self.assertEqual(cf.bucket,spec[2])
 			self.assertEqual(cf.path,spec[3])
 			self.assertEqual(str(cf),spec[4])
+	def testToStr(self):
+		path = 'aws://bucketname/path/to/file.txt'
+		f = AWSPath(path)
+		self.assertEquals(str(f),path)
 		
 
 
