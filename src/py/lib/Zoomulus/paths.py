@@ -21,24 +21,6 @@ class InvalidPathException(Exception):
 
 
 class FileResource:
-	def GetFile(uri):
-		fragments = urlparse.urlsplit(uri)
-		scheme = fragments[0]
-		path = fragments[2]
-		
-		if scheme == 'aws':
-			return AWSPath(path)
-			
-		if len(scheme):
-			path = scheme + ':' + path
-			
-		if os.path.isfile(path):
-			return LocalFile(path)
-		elif os.path.isdir(path):
-			return LocalDir(path)
-		raise InvalidPathException, path
-	GetFile = staticmethod(GetFile)
-		
 	def __init__(self,path):
 		self.path = path
 	def __str__(self):
@@ -49,6 +31,13 @@ class FileResource:
 		return self.__class__.__name__ == 'LocalFile'
 	def IsLocalDir(self):
 		return self.__class__.__name__ == 'LocalDir'
+	def IsCloudPath(self):
+		rv = False
+		for b in self.__class__.__bases__:
+			if b.__name__ == 'CloudPath':
+				rv = True
+				break
+		return rv
 		
 class FileResourceTests(unittest.TestCase):
 	def setUp(self):
@@ -71,8 +60,11 @@ class LocalFileTests(unittest.TestCase):
 	def tearDown(self):
 		os.unlink(self.f[1])
 	def testFile(self):
-		lf = FileResource.GetFile(self.f[1])
-		self.assertEqual(lf.__class__.__name__,'LocalFile')
+		lf = LocalFile(self.f[1])
+		self.failUnless(lf.IsLocalFile())
+		self.assertEquals(str(lf),self.f[1])
+		self.failUnless(os.path.exists(str(lf)))
+		self.failUnless(os.path.isfile(str(lf)))
 		
 
 class LocalDir(FileResource):
@@ -87,8 +79,11 @@ class LocalFolderTests(unittest.TestCase):
 	def tearDown(self):
 		os.rmdir(self.d)
 	def testDir(self):
-		ld = FileResource.GetFile(self.d)
-		self.assertEqual(ld.__class__.__name__,'LocalDir')
+		ld = LocalDir(self.d)
+		self.failUnless(ld.IsLocalDir())
+		self.assertEquals(str(ld),self.d)
+		self.failUnless(os.path.exists(str(ld)))
+		self.failUnless(os.path.isdir(str(ld)))
 		
 
 def IsCloudPath(uri):
@@ -143,8 +138,10 @@ class AWSPathTests(unittest.TestCase):
 		self.s3Files.append(('aws://bucketname/path/to/file','aws','bucketname','path/to/file','aws://bucketname/path/to/file'))
 	def testS3Files(self):
 		for spec in self.s3Files:
-			cf = FileResource.GetFile(spec[0])
+			self.failUnless(IsCloudPath(spec[0]))
+			cf = GetCloudPath(spec[0])
 			self.assertEqual(cf.__class__.__name__,'AWSPath')
+			self.failUnless(cf.IsCloudPath())
 			self.assertEqual(cf.cloudType,spec[1])
 			self.assertEqual(cf.bucket,spec[2])
 			self.assertEqual(cf.path,spec[3])
