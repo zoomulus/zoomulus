@@ -48,8 +48,6 @@ class Options:
 		for arg in args:
 			if ZPaths.IsCloudPath(arg):
 				paths.append(ZPaths.GetCloudPath(arg))
-			elif self.recursiveCopy:
-				paths.append(ZPaths.LocalDir(arg))
 			else:
 				if os.path.isdir(arg):
 					paths.append(ZPaths.LocalDir(arg))
@@ -194,7 +192,7 @@ class CPOptionsTests(unittest.TestCase):
 		self.assertTrue(ueThrown)
 
 	def testOption_a(self):
-		o = CPOptions(['-a']+self.fArgs)
+		o = CPOptions(['-a','../../testdata/testdir1','../../testdata/testdir2'])
 		self.assertTrue(o.preserveFileStatistics)
 		self.assertTrue(o.recursiveCopy)
 		self.assertFalse(o.followSymLinks)
@@ -214,7 +212,7 @@ class CPOptionsTests(unittest.TestCase):
 		o = CPOptions(['-P']+self.fArgs)
 		self.assertFalse(o.followSymLinks)
 	def testOption_R(self):
-		o = CPOptions(['-R']+self.fArgs)
+		o = CPOptions(['-R','../../testdata/testdir1','../../testdata/testdir2'])
 		self.assertTrue(o.recursiveCopy)
 	def testOption_v(self):
 		o = CPOptions(['-v']+self.fArgs)
@@ -378,18 +376,21 @@ class LSOptions(Options):
 		else:
 			raise UsageException("Unsupported option: " + option)
 	def HandleArgs(self,args):
-		f = None
+		self.targets = None
 		nArgs = 0
 		if not args:
-			f = [ZPaths.LocalDir(os.getcwd())]
+			self.targets = [ZPaths.LocalDir(os.getcwd())]
 		else:
 			nArgs = len(args)
 			if nArgs < 1:
-				f = [ZPaths.LocalDir(os.getcwd())]
-		if f is None:
-			f = self.GetPathsFromArgs(args)
+				self.targets = [ZPaths.LocalDir(os.getcwd())]
+		if self.targets is None:
+			self.targets = self.GetPathsFromArgs(args)
 			if nArgs > 1:
-				self.showFolders = True
+				for t in self.targets:
+					if t.IsLocalDir():
+						self.showFolders = True
+						break
 	def GetHelpMessage(self):
 		return """
 	zls [options] file [file...]
@@ -454,7 +455,40 @@ class LSOptionsTests(unittest.TestCase):
 	def testOption_U(self):
 		o = LSOptions('-U')
 		self.assertEquals('U',o.sortBy)
-
+	def testNoArgs(self):
+		o = LSOptions(None)
+		self.assertEquals(o.targets[0],ZPaths.LocalDir(os.getcwd()))
+	def testEmptyArgs(self):
+		o = LSOptions([])
+		self.assertEquals(o.targets[0],ZPaths.LocalDir(os.getcwd()))
+	def testLSOneFile(self):
+		o = LSOptions('../../testdata/test.txt')
+		self.assertEquals(o.targets[0],ZPaths.LocalFile('../../testdata/test.txt'))
+		self.failIf(o.showFolders)
+	def testLSMultipleFiles(self):
+		o = LSOptions(['../../testdata/testdir1/td1test.txt',
+			'../../testdata/testdir2/td2test.txt'])
+		self.assertEquals(o.targets[0],ZPaths.LocalFile('../../testdata/testdir1/td1test.txt'))
+		self.assertEquals(o.targets[1],ZPaths.LocalFile('../../testdata/testdir2/td2test.txt'))
+		self.failIf(o.showFolders)
+	def testLSOneDir(self):
+		o = LSOptions('../../testdata')
+		self.assertEquals(o.targets[0],ZPaths.LocalDir('../../testdata'))
+		self.failIf(o.showFolders)
+	def testLSMultipleDirs(self):
+		o = LSOptions(['../../testdata/testdir1','../../testdata/testdir2'])
+		self.assertEquals(o.targets[0],ZPaths.LocalDir('../../testdata/testdir1'))
+		self.assertEquals(o.targets[1],ZPaths.LocalDir('../../testdata/testdir2'))
+		self.failUnless(o.showFolders)
+	def testLSOneAWS(self):
+		o = LSOptions('aws://bucket/test.txt')
+		self.assertEqual(o.targets[0],ZPaths.AWSPath('aws://bucket/test.txt'))
+		self.failIf(o.showFolders)
+	def testLSMultipleAWS(self):
+		o = LSOptions(['aws://bucket/file1','aws://bucket/file2'])
+		self.assertEqual(o.targets[0],ZPaths.AWSPath('aws://bucket/file1'))
+		self.assertEqual(o.targets[1],ZPaths.AWSPath('aws://bucket/file2'))
+		self.failIf(o.showFolders)
 
 if __name__ == '__main__':
 	unittest.main()
