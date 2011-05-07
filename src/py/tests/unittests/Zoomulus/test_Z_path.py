@@ -80,6 +80,32 @@ class test_Z_path(unittest.TestCase):
 		for awsFile in self.awsFiles:
 			self.failIf(z.path.ismount(awsFile))
 			
+	def test_localFileJoin(self):
+		self.assertEquals('a',z.path.join('a'))
+		self.assertEquals('a/b',z.path.join('a','b'))
+		self.assertEquals('a/b/c',z.path.join('a','b/c'))
+		self.assertEquals('a/b/c',z.path.join('a','b','c'))
+		self.assertEquals('/b/c',z.path.join('a','/b','c'))
+		self.assertEquals('/b/c',z.path.join('a','/b/c'))
+		
+	def test_awsFileJoin(self):
+		self.assertEquals('aws://',z.path.join('aws://'))
+		self.assertEquals('aws://a',z.path.join('aws://','a'))
+		self.assertEquals('aws://a/b',z.path.join('aws://','a','b'))
+		self.assertEquals('aws://a/b',z.path.join('aws://a','b'))
+		self.assertEquals('aws://a/b',z.path.join('aws://','a/b'))
+		self.assertEquals('/a/b',z.path.join('aws://','/a','b'))
+		self.assertEquals('/a/b',z.path.join('aws://','/a/b'))
+		self.assertEquals('aws://c/d',z.path.join('aws://a','b','aws://','c','d'))
+		self.assertEquals('aws://c/d',z.path.join('aws://','a/b','aws://','c/d'))
+		self.assertEquals('aws://c/d',z.path.join('aws://','a','b','aws://c','d'))
+		
+	def test_localFileNormpath(self):
+		self.assertEquals('a/b/c',z.path.normpath('a//b/./c'))
+		
+	def test_awsFileNormpath(self):
+		self.assertEquals('aws://a/b/c',z.path.normpath('aws://a//b/./c'))
+			
 	def test_localFileSplit(self):
 		parts = z.path.split('/td1/td2/td3/test.txt')
 		self.assertEquals('/td1/td2/td3',parts[0])
@@ -88,7 +114,7 @@ class test_Z_path(unittest.TestCase):
 	def test_awsFileSplit(self):
 		parts = z.path.split('aws://bucket/path/to/file')
 		self.assertEquals('aws',parts[0])
-		self.assertEquals('//bucket/path/to',parts[1])
+		self.assertEquals('/bucket/path/to',parts[1])
 		self.assertEquals('file',parts[2])
 		
 	def test_awsFileSplitDrive(self):

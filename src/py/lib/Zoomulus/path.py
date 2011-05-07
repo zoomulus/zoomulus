@@ -14,25 +14,27 @@ import urlparse
 cloudtypes = ['aws']
 
 def abspath(path):
-	pass
+	if iscloudpath(path):
+		return path
+	return os.path.abspath(path)
 	
 def basename(path):
-	pass
+	return os.path.basename(path) # works for cloud resources too
 	
 def cloudtype(path):
-	pass
+	return urlparse.urlsplit(path)[0]
 	
 def commonprefix(path):
 	pass
 	
 def dirname(path):
-	pass
+	return os.path.dirname(path) # works for cloud resources too
 	
 def exists(path):
 	pass
 	
 def expandvars(path):
-	pass
+	return os.path.expandvars(path)
 	
 def getatime(path):
 	pass
@@ -44,43 +46,83 @@ def getsize(path):
 	pass
 	
 def isabs(path):
-	pass
+	if iscloudpath(path):
+		return len(basename(path)) > 0
+	return os.path.isabs(path)
+	
+def iscloudpath(path):
+	return cloudtypes.count(cloudtype(path)) > 0
 	
 def iscloudfile(path):
-	return cloudtypes.count(urlparse.urlsplit(path)[2]) > 0
+	return iscloudpath(path)
 	
 def isclouddir(path):
-	return cloudtypes.count(urlparse.urlsplit(path)[2]) > 0
+	return iscloudpath(path)
 	
 def isfile(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.isfile(path)
 	
 def isdir(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.isdir(path)
 	
 def islink(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.islink(path)
 	
 def ismount(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.ismount(path)
 	
 def join(path,*paths):
-	pass
+	ctr = 0
+	for p in paths:
+		if iscloudpath(p) or p.startswith('/'):
+			remainingpaths = paths[ctr:]
+			if len(remainingpaths) == 1:
+				return remainingpaths[0]
+			elif len(remainingpaths) == 2:
+				return join(remainingpaths[0],remainingpaths[1])
+			elif len(remainingpaths) > 2:
+				return join(remainingpaths[0],*remainingpaths[1:])
+		else:
+			if not path.endswith('/'):
+				path = path + '/'
+			path = path + p
+		ctr = ctr + 1
+	return path
 	
 def normcase(path):
-	pass
+	if iscloudpath(path):
+		return path
+	return os.path.normcase(path)
 	
 def normpath(path):
-	pass
+	if iscloudpath(path):
+		parts = split(path)
+		p = os.path.normpath(join(parts[1],parts[2])).replace('\\','/')
+		return parts[0] + ':/' + p
+	return os.path.normpath(path)
 	
 def split(path):
-	pass
+	if iscloudpath(path):
+		parts = urlparse.urlsplit(path)
+		p = parts[2]
+		if p.startswith('//'):
+			p = p[1:]
+		return (parts[0], dirname(p), basename(p))
+	return os.path.split(path)
 	
 def splitdrive(path):
-	pass
+	return os.path.splitdrive(path) # works with cloud resources too
 	
 def splitext(path):
-	pass
+	return os.path.splitext(path) # works with cloud resources too
 	
 def walk(path,func,arg):
 	pass
