@@ -25,25 +25,33 @@ def cloudtype(path):
 	return urlparse.urlsplit(path)[0]
 	
 def commonprefix(path):
-	pass
+	return os.path.commonprefix(path)
 	
 def dirname(path):
 	return os.path.dirname(path) # works for cloud resources too
 	
 def exists(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.exists(path)
 	
 def expandvars(path):
 	return os.path.expandvars(path)
 	
 def getatime(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.getatime(path)
 	
 def getmtime(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.getmtime(path)
 	
 def getsize(path):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.getsize(path)
 	
 def isabs(path):
 	if iscloudpath(path):
@@ -125,7 +133,9 @@ def splitext(path):
 	return os.path.splitext(path) # works with cloud resources too
 	
 def walk(path,func,arg):
-	pass
+	if iscloudpath(path):
+		return False
+	return os.path.watlk(path,func,arg)
 
 def main():
 	pass
