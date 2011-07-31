@@ -3,98 +3,287 @@
 <plist version="1.0">
 <dict>
 	<key>currentDocument</key>
-	<string>bin/zoomulus.py</string>
+	<string>lib/Zoomulus/AWSRestRequest.py</string>
 	<key>documents</key>
 	<array>
 		<dict>
 			<key>filename</key>
+			<string>lib/Zoomulus/filecmp.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-06T22:18:54Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/shutil.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-06T22:33:00Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/Zoomulus/test_Z_path.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-20T06:25:34Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/Zoomulus/test_Z_pkg.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-20T06:34:18Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/path.py</string>
+			<key>lastUsed</key>
+			<date>2011-05-20T03:42:33Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/Zoomulus/test_ZoomulusTime.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-20T07:12:57Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/ZoomulusTime.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-22T05:47:46Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/Zoomulus/test_AWSRestSignature.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-31T00:15:16Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/AWSRestSignature.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-30T23:48:31Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/Zoomulus/test_AWSSignature.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-20T07:12:47Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/AWSSignature.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-31T00:41:21Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/signature.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-22T06:12:09Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/Zoomulus/test_AWSRestRequest.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-31T00:42:18Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/Zoomulus/AWSRestRequest.py</string>
+			<key>lastUsed</key>
+			<date>2011-07-31T00:42:18Z</date>
+			<key>selected</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>filename</key>
 			<string>lib/Zoomulus/__init__.py</string>
 			<key>lastUsed</key>
-			<date>2011-03-12T18:26:25Z</date>
+			<date>2011-07-20T07:23:40Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_Z_LocalFile.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-13T04:01:03Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_Z_LocalDir.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:09:50Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_Z_AWSPath.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:09:57Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>lib/Zoomulus/paths.py</string>
 			<key>lastUsed</key>
-			<date>2011-04-04T23:34:07Z</date>
+			<date>2011-05-20T03:42:56Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_ZC_CPOptions.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:10:18Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_ZC_Options.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:10:23Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_ZC_LSOptions.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:10:30Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/rununittests.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:10:35Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/ZoomulusCommands/CPOptions.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:10:51Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/ZoomulusCommands/LSOptions.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:10:59Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>lib/ZoomulusCommands/options.py</string>
 			<key>lastUsed</key>
-			<date>2011-04-04T15:07:36Z</date>
+			<date>2011-07-09T04:06:27Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>lib/ZoomulusCommands/__init__.py</string>
 			<key>lastUsed</key>
-			<date>2011-03-12T18:26:38Z</date>
+			<date>2011-04-06T20:46:13Z</date>
 		</dict>
 		<dict>
 			<key>filename</key>
 			<string>bin/zoomulus.py</string>
 			<key>lastUsed</key>
-			<date>2011-04-04T23:34:07Z</date>
-			<key>selected</key>
-			<true/>
+			<date>2011-04-05T22:11:20Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_ZC_Command.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:23:20Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_ZC_CPCommand.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-06T19:43:54Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/ZoomulusCommands/CPCommand.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:18:44Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/ZoomulusCommands/command.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:22:42Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>tests/unittests/test_ZC_LSCommand.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:20:09Z</date>
+		</dict>
+		<dict>
+			<key>filename</key>
+			<string>lib/ZoomulusCommands/LSCommand.py</string>
+			<key>lastUsed</key>
+			<date>2011-04-05T22:21:30Z</date>
 		</dict>
 	</array>
 	<key>fileHierarchyDrawerWidth</key>
 	<integer>200</integer>
 	<key>metaData</key>
 	<dict>
-		<key>bin/zoomulus.py</key>
+		<key>lib/Zoomulus/AWSRestRequest.py</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>60</integer>
+				<integer>47</integer>
 				<key>line</key>
-				<integer>11</integer>
+				<integer>139</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
 			<integer>0</integer>
 		</dict>
-		<key>lib/Zoomulus/paths.py</key>
+		<key>lib/Zoomulus/AWSRestSignature.py</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>36</integer>
+				<integer>31</integer>
 				<key>line</key>
-				<integer>35</integer>
+				<integer>6</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>90</integer>
+			<integer>2</integer>
 		</dict>
-		<key>lib/ZoomulusCommands/options.py</key>
+		<key>lib/Zoomulus/AWSSignature.py</key>
 		<dict>
 			<key>caret</key>
 			<dict>
 				<key>column</key>
-				<integer>60</integer>
+				<integer>4</integer>
 				<key>line</key>
-				<integer>462</integer>
+				<integer>0</integer>
 			</dict>
 			<key>firstVisibleColumn</key>
 			<integer>0</integer>
 			<key>firstVisibleLine</key>
-			<integer>451</integer>
+			<integer>0</integer>
+		</dict>
+		<key>tests/unittests/Zoomulus/test_AWSRestRequest.py</key>
+		<dict>
+			<key>caret</key>
+			<dict>
+				<key>column</key>
+				<integer>62</integer>
+				<key>line</key>
+				<integer>62</integer>
+			</dict>
+			<key>firstVisibleColumn</key>
+			<integer>0</integer>
+			<key>firstVisibleLine</key>
+			<integer>24</integer>
 		</dict>
 	</dict>
 	<key>openDocuments</key>
 	<array>
-		<string>bin/zoomulus.py</string>
-		<string>lib/ZoomulusCommands/options.py</string>
-		<string>lib/Zoomulus/paths.py</string>
+		<string>lib/Zoomulus/AWSRestRequest.py</string>
+		<string>lib/Zoomulus/AWSSignature.py</string>
+		<string>lib/Zoomulus/AWSRestSignature.py</string>
+		<string>tests/unittests/Zoomulus/test_AWSRestRequest.py</string>
 	</array>
 	<key>showFileHierarchyDrawer</key>
 	<true/>
 	<key>windowFrame</key>
-	<string>{{61, 67}, {721, 811}}</string>
+	<string>{{61, 67}, {806, 811}}</string>
 </dict>
 </plist>
